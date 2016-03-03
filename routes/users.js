@@ -12,6 +12,12 @@ router.get('/login', function (req, res, next) {
 	res.render('login', {
 		title: '登录'
 	});
+})
+
+router.post('/login', function (req, res, next) {
+	res.render('login', {
+		title: '登录'
+	});
 });
 
 module.exports = router;
