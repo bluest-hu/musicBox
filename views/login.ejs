@@ -1,70 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title%></title>
+    <title><%= title %></title>
     <link rel="stylesheet" type="text/css" href="/style/style.css">
     <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://raw.github.com/daneden/animate.css/master/animate.css">
     <script src="http://cn.vuejs.org/js/vue.min.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row" id="loginPage">
-            <div class="center-block" style="width: 400px;">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="panel-title">
-                            <b>登录</b>
+<% include header %>
+
+
+<div class="container-fluid">
+    <div class="row" id="loginPage">
+        <div class="center-block" style="width: 400px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <b>登录</b>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form action="" method="POST" v-on:submit="formSubmit">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </label>
+                                <input type="text" id="username" class="form-control" name="username" v-model="formData.username"
+                                       placeholder="请输入用户名">
+                            </div>
                         </div>
-                    </div>
-                    <div class="panel-body">
-                        <form action="" method="POST" v-on:submit="formSubmit">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                    </label>
-                                    <input type="text" id="username" class="form-control" name="username" v-model="username" placeholder="请输入用户名">
-                                </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></label>
+                                <input type="{{!formConfig.showPassword ? 'password' : 'text'}}" id="password" class="form-control" name="password" v-model="formData.password" placeholder="请输入密码">
+                                <span class="input-group-addon" v-on:click="formConfig.showPassword = !formConfig.showPassword;" v-show="!!formData.password">
+                                        <span v-bind:class="[!formConfig.showPassword ? 'glyphicon-eye-close': 'glyphicon-eye-open', 'glyphicon']"></span>
+                                </span>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></label>
-                                    <div>
-                                        <input type="{{!showPassword ? 'password' : 'text'}}" id="password" class="form-control" name="password" v-model="password" placeholder="请输入密码">
-                                    </div>
-                                    <div class="input-group-addon" v-on:click="showPassword = !showPassword;" v-show="!!password">
-                                        <span class="" v-bind:class="[!showPassword ? 'glyphicon-eye-close': 'glyphicon-eye-open', 'glyphicon']"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="checkbox pull-left">
-                                    <label><input type="checkbox" id="remember" v-model="remember">记住我</label></div>
-                                    <input type="submit" class="pull-right btn btn-primary" >
-                                </div>
-                        </form>
-                    </div>
-                    <div class="panel-footer">
-                    </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="checkbox pull-left">
+                                <label><input type="checkbox" id="remember" v-model="formData.remember">记住我</label></div>
+                            <input type="submit" class="pull-right btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <label><input type="checkbox" v-model="order"> 切换排序</label> {{order}}
+                    <ul v-for="n in 5 | orderBy 'n' order?1:-1 filterBy ">
+                        <li>{{n}}</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 <script type="text/javascript">
-    new Vue({
+    Vue.config.debug = true
+
+    var loginForm = new Vue({
         el: '#loginPage',
         data: {
-            username: '',
-            password:'',
-            remember: false,
-            showPassword: false
+            formData: {
+                username: '',
+                password: '',
+                remember: false
+            },
+            formConfig: {
+                 showPassword: false
+            }
+           
+           
         },
         methods: {
             formSubmit: function (event) {
                 event.preventDefault();
-            }   
+
+                console.log(this.$data.formData)
+            }
         }
     });
 
@@ -80,7 +96,6 @@
 
     // vue.js filter
     Vue.filter("", function () {
-
     });
 
 </script>

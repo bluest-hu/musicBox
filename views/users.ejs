@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/style/style.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://raw.github.com/daneden/animate.css/master/animate.css">
+    <script src="http://cn.vuejs.org/js/vue.min.js"></script>
+</head>
+<body>
+<% include header %>
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-5">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="panel-title text-center">
+	                        <b>加密方式</b>
+	                    </div>
+					</div>
+					<div class="panel-body">
+						<form class="form-group" method="post" action="">
+							<div class="input-group">
+								<label>加密方式</label>
+								<select name="cryType" class="select">
+								<% for ( var i = 0, length = cryList.length; i < length; i++ )  { %>
+									<option value="<%= cryList[i] %>" <%= cryList[i] ===cryType ? 'selected="selected"': ''%>><%= cryList[i] %></option>
+								<%}%>
+								</select>
+							</div>	
+
+							<input class="btn btn-default" type="submit" value="提交"/>
+						</form>
+					</div>
+
+					<div class="panel-footer">
+						<% if (cryType) { %>
+							<p>you select crypto type is <%= cryType %></p>
+						<% } %> 
+					</div>
+				</div>
+			</div>		
+		</div>
+	</div>
+</body>
+</html>
