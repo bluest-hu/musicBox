@@ -2,15 +2,13 @@
 <html>
 <head>
     <title><%= title %></title>
-    <link rel="stylesheet" type="text/css" href="/style/style.css">
+    <link rel="stylesheet" type="text/css" href="../styles/style.css">
     <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://raw.github.com/daneden/animate.css/master/animate.css">
-    <script src="http://cn.vuejs.org/js/vue.min.js"></script>
+    <script src="../scripts/vue.min.js"></script>
 </head>
 <body>
 <% include header %>
-
-
 <div class="container-fluid">
     <div class="row" id="loginPage">
         <div class="center-block" style="width: 400px;">
@@ -21,43 +19,47 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form action="" method="POST" v-on:submit="formSubmit">
+                    <form action="/" method="POST" v-on:submit="formSubmit">
                         <div class="form-group">
                             <div class="input-group">
                                 <label class="input-group-addon">
                                     <span class="glyphicon glyphicon-user"></span>
                                 </label>
-                                <input type="text" id="username" class="form-control" name="username" v-model="formData.username"
-                                       placeholder="请输入用户名">
+                                <input type="text" id="username" class="form-control" name="username" v-model="formData.username" placeholder="请输入用户名">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <label class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></label>
-                                <input type="{{!formConfig.showPassword ? 'password' : 'text'}}" id="password" class="form-control" name="password" v-model="formData.password" placeholder="请输入密码">
-                                <span class="input-group-addon" v-on:click="formConfig.showPassword = !formConfig.showPassword;" v-show="!!formData.password">
+                                <input
+                                        type="{{!formConfig.showPassword ? 'password' : 'text'}}"
+                                        id="password"
+                                        class="form-control" name="password"
+                                        v-model="formData.password"
+                                        placeholder="请输入密码">
+                                <span
+                                        class="input-group-addon" v-on:click="formConfig.showPassword = !formConfig.showPassword;"
+                                        v-if="!!formData.password">
                                         <span v-bind:class="[!formConfig.showPassword ? 'glyphicon-eye-close': 'glyphicon-eye-open', 'glyphicon']"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="checkbox pull-left">
-                                <label><input type="checkbox" id="remember" v-model="formData.remember">记住我</label></div>
-                            <input type="submit" class="pull-right btn btn-primary">
+                                <label><input type="checkbox" id="remember" v-model="formData.remember">记住我</label>
+                            </div>
+                            <input type="submit" class="pull-right btn btn-primary" value="提交">
                         </div>
                     </form>
                 </div>
-                <div class="panel-footer">
-                    <label><input type="checkbox" v-model="order"> 切换排序</label> {{order}}
-                    <ul v-for="n in 5 | orderBy 'n' order?1:-1 filterBy ">
-                        <li>{{n}}</li>
-                    </ul>
-                </div>
+                <!--<div class="panel-footer">-->
+                <!--</div>-->
             </div>
         </div>
     </div>
 </div>
 </body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script type="text/javascript">
     Vue.config.debug = true
 
@@ -70,16 +72,19 @@
                 remember: false
             },
             formConfig: {
-                 showPassword: false
+                showPassword: false
             }
-           
-           
         },
         methods: {
             formSubmit: function (event) {
                 event.preventDefault();
-
-                console.log(this.$data.formData)
+                console.log(this.$data.formData);
+                var that = this;
+                $.ajax({
+                    method: "post",
+                    type: 'json',
+                    data: that.$data.formData
+                })
             }
         }
     });
@@ -96,6 +101,7 @@
 
     // vue.js filter
     Vue.filter("", function () {
+
     });
 
 </script>

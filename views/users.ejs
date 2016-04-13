@@ -2,17 +2,16 @@
 <html>
 <head>
     <title><%= title %></title>
-    <link rel="stylesheet" type="text/css" href="/style/style.css">
-    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://raw.github.com/daneden/animate.css/master/animate.css">
-    <script src="http://cn.vuejs.org/js/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/style.css">
+    <link rel="stylesheet" type="text/css" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../styles/animate.min.css">
+    <script src="../scripts/vue.min.js"></script>
 </head>
 <body>
 <% include header %>
 	<div class="container-fluid">
-
 		<div class="row">
-			<div class="col-md-5">
+			<div class="center-block" style="width: 400px;">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="panel-title text-center">
@@ -20,24 +19,46 @@
 	                    </div>
 					</div>
 					<div class="panel-body">
-						<form class="form-group" method="post" action="">
-							<div class="input-group">
-								<label>加密方式</label>
-								<select name="cryType" class="select">
-								<% for ( var i = 0, length = cryList.length; i < length; i++ )  { %>
-									<option value="<%= cryList[i] %>" <%= cryList[i] ===cryType ? 'selected="selected"': ''%>><%= cryList[i] %></option>
-								<%}%>
-								</select>
+						<form class="form-horizontal" method="post" action="">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">yongh</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="cryInput" placeholder="请输入加密内容" value="<%= cryInput || '' %>" />
+								</div>
 							</div>	
 
-							<input class="btn btn-default" type="submit" value="提交"/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">加密方式</label>
+								<div class="col-sm-9">
+									<select name="cryType" class="form-control">
+									<% for ( var i = 0, length = cryList.length; i < length; i++ )  { %>
+										<option value="<%= cryList[i] %>" <%= cryList[i] ===cryType ? 'selected="selected"': ''%>><%= cryList[i] %></option>
+									<%}%>
+									</select>
+								</div>
+								
+							</div>	
+
+							 <div class="form-group">
+							    <div class="col-sm-offset-3 col-sm-9">
+							      <input type="submit" class="btn btn-success col-sm-4" value="提交"/>
+							    </div>
+							 </div>
 						</form>
 					</div>
 
 					<div class="panel-footer">
 						<% if (cryType) { %>
-							<p>you select crypto type is <%= cryType %></p>
+							<div>加密方式：<b><%= cryType %></b></div>
 						<% } %> 
+
+						<% if ( cryInput ) { %>
+							<div>加密文本：<b><%= cryInput %></b></div>
+						<% } %>
+
+						<% if ( cryResult ) { %>
+							<div>加密结果：<b><%= cryResult %></b></div>
+						<% } %>
 					</div>
 				</div>
 			</div>		

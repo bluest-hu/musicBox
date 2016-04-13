@@ -13,3 +13,4 @@ var SQL_CONNECTION = {
 };
 
 var connection = mysql.createConnection(SQL_CONNECTION);
+
